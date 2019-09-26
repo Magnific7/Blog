@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+{% import "bootstrap/wtf.html" as wtf %}
+<!-- Content block -->
+{% block content %}
+
+    <title> {{ title }} </title>
+
+    <div class="container">
+
+        <h2 class="card">The blog post</h2>
+
+        
+          <div class="tab-content ">
+            <h4>The most recent posts </h4>
+            <div><br>
+                <div class="card">{{macro.displayPitches(interviewpitches)}}</div>
+            </div>
+          </div>
+   </div>
+
+
+
+
+{% endblock %}
