@@ -1,6 +1,6 @@
-{% macro displayPitches(all_pitches)%}
-    {% if all_pitches%}
-        {% for pitch in all_pitches%}
+{% macro displayBlogs(blogs)%}
+    {% if blogs %}
+        {% for blog in blogs %}
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
@@ -9,21 +9,21 @@
                             <div class="col-md-2 img-responsive">
                             </div>
                             <div class="col-md-10">
-                                <p class="pitch-metadata">
-                                    <h3 class="inline">{{pitch.pitch_title}}</h3>
-                                    <small class="text-muted">  Posted on {{pitch.posted.strftime('%d/%m/%Y')}}</small>
+                                <p class="blog-metadata">
+                                    <h3 class="inline">{{blog.blog_title}}</h3>
+                                    <small class="text-muted">  Posted on {{blog.posted.strftime('%d/%m/%Y')}}</small>
                                     <hr>
                                 </p>
-                                <p class="pitch-content">{{pitch.content}}</p>
+                                <p class="blog-content">{{blog.content}}</p>
                                 <small class="text-muted">
-                                 -By {{pitch.user.username}}
+                                 -By {{blog.user.username}}
                                 </small>
                                 <div class="comments">
 
-                                    <a href="{{url_for('main.comment',pitch_id=pitch.id)}}" class= "btn btn-primary btn-sm"><i class="fas fa-comment"></i> Comment</a>
-                                    <a href="{{url_for('main.like',pitch_id=pitch.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Like <span class="likes">{{pitch.likes.count()}}</span></a>
+                                    <a href="{{url_for('main.comment',blog_id=blog.id)}}" class= "btn btn-primary btn-sm"><i class="fas fa-comment"></i> Comment</a>
+                                    <a href="{{url_for('main.like',blog_id=blog.id)}}" class= "btn btn-success btn-sm"><i class="far fa-thumbs-up"></i>Like <span class="likes">{{blog.likes.count()}}</span></a>
 
-                                    <a href="{{url_for('main.dislike',pitch_id=pitch.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Dislike <span class="dislikes">{{pitch.dislikes.count()}}</span></a>
+                                    <a href="{{url_for('main.dislike',blog_id=blog.id)}}" class= "btn btn-danger btn-sm"><i class="far fa-thumbs-down"></i>Dislike <span class="dislikes">{{blog.dislikes.count()}}</span></a>
 
 
                                 </div>
@@ -54,7 +54,7 @@
 
                     <div class="media-body">
                         <a class="mr-2" href="#">{{comment.user.username}}</a>
-                        <p class="pitch-content">{{comment.comment_content}}</p>
+                        <p class="blog-content">{{comment.comment_content}}</p>
 
                     </div>
 

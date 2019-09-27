@@ -1,11 +1,12 @@
 from flask import render_template,request,redirect,url_for,abort
 from . import main
-from .forms import UpdateProfile, PitchForm, CommentForm,UpdateBlog
-from ..models import User, Role, Pitch,Like,Dislike,Comment
+from .forms import UpdateProfile, BlogForm, CommentForm,UpdateBlog
+from ..models import User, Role, Blog,Like,Dislike,Comment
 from flask_login import login_required, current_user
 from .. import db,photos
 from sqlalchemy import func
 from sqlalchemy.orm import session
+from ..requests import get_quotes
 
 
 # Views
@@ -15,27 +16,26 @@ def index():
     '''
     View root page function that returns the index page and its data
     '''
-    interviewpitches = Pitch.query.filter_by(category="Interview-Pitch").order_by(Pitch.posted.desc()).all()
-    productpitches = Pitch.query.filter_by(category="Product-Pitch").order_by(Pitch.posted.desc()).all()
-    promotionpitches = Pitch.query.filter_by(category="Promotion-Pitch").order_by(Pitch.posted.desc()).all()
-    businesspitches = Pitch.query.filter_by(category="Business-Pitch").order_by(Pitch.posted.desc()).all()
 
-    pitches = Pitch.query.filter_by().first()
+    quotes = get_quotes()
+    # print(quotes)
+    
+    blogs = Blog.query.all()
 
     title = 'Blog'
-    return render_template('index.html', title = title, pitches = pitches, interviewpitches = interviewpitches, productpitches = productpitches, promotionpitches = promotionpitches, businesspitches = businesspitches)
+    return render_template('index.html', title = title, blogs = blogs, quotes = quotes)
 
 @main.route('/user/<uname>')
 @login_required
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
-    get_pitches = Pitch.query.filter_by(user_id = current_user.id).all()
+    get_blogs = Blog.query.filter_by(user_id = current_user.id).all()
 
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user, pitches_content = get_pitches)
+    return render_template("profile/profile.html", user = user, blogs_content = get_blogs)
 @main.route('/user/<uname>/update',methods = ['GET','POST'])
 @login_required
 def update_profile(uname):
@@ -56,118 +56,118 @@ def update_profile(uname):
     return render_template('profile/update.html',form =form)
 
 
-@main.route('/pitch/new',methods = ['GET','POST'])
+@main.route('/blog/new',methods = ['GET','POST'])
 @login_required
-def pitch():
+def blog():
     '''
-    View pitch function that returns the pitch page and data
+    View blog function that returns the blog page and data
     '''
-    pitch_form = PitchForm()
-    my_likes = Like.query.filter_by(pitch_id=Pitch.id)
+    blog_form = BlogForm()
+    my_likes = Like.query.filter_by(blog_id=Blog.id)
 
-    if pitch_form.validate_on_submit():
-        content = pitch_form.content.data
-        category = 'Interview-Pitch'
-        pitch_title = pitch_form.pitch_title.data
+    if blog_form.validate_on_submit():
+        content = blog_form.content.data
+        # category = 'Interview-blog'
+        blog_title = blog_form.blog_title.data
 
-        new_pitch = Pitch(pitch_title=pitch_title, content=content, category = category, user = current_user)
-        new_pitch.save_pitch()
+        new_blog = Blog(blog_title=blog_title, content=content,user = current_user)
+        new_blog.save_blog()
 
         return redirect(url_for('main.index'))
 
 
     title = 'New Blog'
-    return render_template('pitch.html', title = title, pitch_form = pitch_form, likes = my_likes)
+    return render_template('blog.html', title = title, blog_form = blog_form, likes = my_likes)
 
-@main.route('/pitch/<int:pitch_id>/comment',methods = ['GET', 'POST'])
+@main.route('/blog/<int:blog_id>/comment',methods = ['GET', 'POST'])
 @login_required
-def comment(pitch_id):
+def comment(blog_id):
     '''
     View comments page function that returns the comment page and its data
     '''
     # comment_form = CommentForm()
 
     comment_form = CommentForm()
-    my_pitch = Pitch.query.get(pitch_id)
-    if my_pitch is None:
+    my_blog = Blog.query.get(blog_id)
+    if my_blog is None:
         abort(404)
 
     if comment_form.validate_on_submit():
         comment_content = comment_form.comment_content.data
 
-        new_comment = Comment(comment_content=comment_content, pitch_id = pitch_id, user = current_user)
+        new_comment = Comment(comment_content=comment_content, blog_id = blog_id, user = current_user)
         new_comment.save_comment()
 
-        return redirect(url_for('.comment', pitch_id=pitch_id))
+        return redirect(url_for('.comment', blog_id=blog_id))
 
-    all_comments = Comment.query.filter_by(pitch_id=pitch_id).all()
+    all_comments = Comment.query.filter_by(blog_id=blog_id).all()
     title = 'Comments'
 
-    return render_template('comment.html', title = title, pitch=my_pitch ,comment_form = comment_form, comment = all_comments )
+    return render_template('comment.html', title = title, blog=my_blog ,comment_form = comment_form, comment = all_comments )
 
 
-@main.route('/pitch/<int:pitch_id>/like',methods = ['GET','POST'])
+@main.route('/blog/<int:blog_id>/like',methods = ['GET','POST'])
 @login_required
-def like(pitch_id):
+def like(blog_id):
     '''
     View like function that returns likes
     '''
-    my_pitch = Pitch.query.get(pitch_id)
+    my_blog = Blog.query.get(blog_id)
     user = current_user
 
-    pitch_likes = Like.query.filter_by(pitch_id=pitch_id)
+    blog_likes = Like.query.filter_by(blog_id=blog_id)
 
 
-    if Like.query.filter(Like.user_id==user.id,Like.pitch_id==pitch_id).first():
+    if Like.query.filter(Like.user_id==user.id,Like.blog_id==blog_id).first():
         return  redirect(url_for('.index'))
 
-    new_like = Like(pitch_id=pitch_id, user = current_user)
+    new_like = Like(blog_id=blog_id, user = current_user)
     new_like.save_likes()
     return redirect(url_for('.index'))
 
-@main.route('/pitch/<int:pitch_id>/dislike',methods = ['GET','POST'])
+@main.route('/blog/<int:blog_id>/dislike',methods = ['GET','POST'])
 @login_required
-def dislike(pitch_id):
+def dislike(blog_id):
     '''
     View dislike function that returns dislikes
     '''
-    my_pitch = Pitch.query.get(pitch_id)
+    my_blog = Blog.query.get(blog_id)
     user = current_user
 
-    pitch_dislikes = Dislike.query.filter_by(pitch_id=pitch_id)
+    blog_dislikes = Dislike.query.filter_by(blog_id=blog_id)
 
-    if Dislike.query.filter(Dislike.user_id==user.id,Dislike.pitch_id==pitch_id).first():
+    if Dislike.query.filter(Dislike.user_id==user.id,Dislike.blog_id==blog_id).first():
         return redirect(url_for('.index'))
 
-    new_dislike = Dislike(pitch_id=pitch_id, user = current_user)
+    new_dislike = Dislike(blog_id=blog_id, user = current_user)
     new_dislike.save_dislikes()
     return redirect(url_for('.index'))
 
-@main.route('/pitch//<int:pitch_id>/updateblog',methods = ['GET','POST'])
+@main.route('/blog//<int:blog_id>/updateblog',methods = ['GET','POST'])
 @login_required
-def update_blog(pitch_id):
-    my_pitch = Pitch.query.get(pitch_id)
-    print(my_pitch.id)
-    if my_pitch is None:
+def update_blog(blog_id):
+    my_blog = Blog.query.get(blog_id)
+    print(my_blog.id)
+    if my_blog is None:
         abort(404)
 
     form = UpdateBlog()
 
     if form.validate_on_submit():
-        my_pitch.content = form.blog.data
+        my_blog.content = form.blog.data
 
-        db.session.add(my_pitch)
+        db.session.add(my_blog)
         db.session.commit()
-        print(my_pitch.content)
+        print(my_blog.content)
         return redirect(url_for('.profile', uname=current_user.username))
 
     return render_template('profile/updateblog.html',form =form)
 
-@main.route("/pitch/<int:pitch_id>/delete", methods=['POST'])
+@main.route("/blog/<int:blog_id>/delete", methods=['POST'])
 @login_required
-def delete_blog(pitch_id):
-    my_pitch = Pitch.query.get(pitch_id)
-    db.session.delete(my_pitch)
+def delete_blog(blog_id):
+    my_blog = Blog.query.get(blog_id)
+    db.session.delete(my_blog)
     db.session.commit()
     return redirect(url_for('.index'))
 

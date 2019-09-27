@@ -8,10 +8,10 @@
     {% endblock %}
 {% block content %}
 <div>
-    <h3>{{pitch.pitch_title}}</h3>
-    <small class="text-muted">Posted on {{pitch.posted.strftime('%d/%m/%Y')}} | {{pitch.category}}</small>
-    <p>{{pitch.content}}</p>
-    <p>By {{pitch.user.username}}</p>
+    <h3>{{blog.blog_title}}</h3>
+    <small class="text-muted">Posted on {{blog.posted.strftime('%d/%m/%Y')}} | {{blog.category}}</small>
+    <p>{{blog.content}}</p>
+    <p>By {{blog.user.username}}</p>
 </div>
 <div class="container">
  <small class="text-muted"> {{macro.displayComments(comment)}}</small> 

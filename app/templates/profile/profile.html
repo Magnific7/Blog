@@ -12,18 +12,18 @@
     <h3> {{current_user.username| capitalize}} </h3>
 
     {% if current_user.bio %}
-      <p> {{current_user.bio}}</p>
+      <p> Bio:{{current_user.bio}}</p>
 <a href="{{url_for('main.update_profile',uname=user.username)}}">Edit bio</a>
     {%else%}
       <p> {{current_user.username| capitalize}} has no bio </p>
     {% endif %}
     <div class="container card">
-      <h4 class="card-header">Your pitches</h4>
+      <h4 class="card-header">Your blogs</h4>
       <ul>
-        {% for pitch in pitches_content %}
-        <li>{{pitch.content}}</li>
-        <a href="{{url_for('main.update_blog',pitch_id=pitch.id)}}">Edit blog</a>
-        <form action="{{ url_for('main.delete_blog', pitch_id=pitch.id) }}" method="POST">
+        {% for blog in blogs_content %}
+        <li>{{blog.content}}</li>
+        <a href="{{url_for('main.update_blog',blog_id=blog.id)}}">Edit blog</a>
+        <form action="{{ url_for('main.delete_blog', blog_id=blog.id) }}" method="POST">
             <input class="btn btn-danger" type="submit" value="Delete">
         {% endfor %}
       </ul>

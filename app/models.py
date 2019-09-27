@@ -4,6 +4,15 @@ from flask_login import UserMixin
 from . import login_manager
 from datetime import datetime
 
+class Quote:
+    '''
+    Quote class to define quote objects.
+    '''
+    def __init__(self,id,author,quote):
+        self.id =id
+        self.author = author
+        self.quote = quote
+
 class PhotoProfile(db.Model):
     __tablename__ = 'profile_photos'
 
@@ -22,7 +31,7 @@ class User(UserMixin,db.Model):
     password_secure = db.Column(db.String(255))
     pass_secure = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
-    pitches = db.relationship('Pitch',backref = 'user',lazy = "dynamic")
+    blogs = db.relationship('Blog',backref = 'user',lazy = "dynamic")
     comments = db.relationship('Comment',backref = 'user',lazy = "dynamic")
     likes = db.relationship('Like',backref = 'user',lazy = "dynamic")
     dislikes = db.relationship('Dislike',backref = 'user',lazy = "dynamic")
@@ -55,38 +64,38 @@ class Role(db.Model):
     def __repr__(self):
         return f'User {self.name}'
 
-class Pitch(db.Model):
+class Blog(db.Model):
 
-    __tablename__ = 'pitches'
+    __tablename__ = 'blogs'
 
     id = db.Column(db.Integer,primary_key = True)
     content = db.Column(db.String)
-    pitch_title = db.Column(db.String)
+    blog_title = db.Column(db.String)
     category = db.Column(db.String())
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
-    comments = db.relationship('Comment',backref = 'pitch',lazy = "dynamic")
-    likes = db.relationship('Like',backref = 'pitch',lazy = "dynamic")
-    dislikes = db.relationship('Dislike',backref = 'pitch',lazy = "dynamic")
+    comments = db.relationship('Comment',backref = 'blog',lazy = "dynamic")
+    likes = db.relationship('Like',backref = 'blog',lazy = "dynamic")
+    dislikes = db.relationship('Dislike',backref = 'blog',lazy = "dynamic")
 
 
-    def save_pitch(self):
+    def save_blog(self):
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def get_pitches(cls,id):
-        pitches = Pitch.query.filter_by(pitch_id=id).all()
-        return pitches
+    def get_blogs(cls,id):
+        blogs = Blog.query.filter_by(blog_id=id).all()
+        return blogs
 
     def __repr__(self):
-        return f'Pitch {self.pitch_title}'
+        return f'Blog {self.blog_title}'
 class Comment(db.Model):
     __tablename__='comments'
 
     id = db.Column(db.Integer,primary_key=True)
     comment_content = db.Column(db.String())
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
     def save_comment(self):
@@ -95,7 +104,7 @@ class Comment(db.Model):
 
     @classmethod
     def get_comments(cls,id):
-        comments = Comment.query.filter_by(pitch_id=id).all()
+        comments = Comment.query.filter_by(blog_id=id).all()
         return comments
 
     @classmethod
@@ -108,7 +117,7 @@ class Like (db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     like = db.Column(db.Integer,default=1)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
     def save_likes(self):
@@ -116,23 +125,23 @@ class Like (db.Model):
         db.session.commit()
 
     def add_likes(cls,id):
-        like_pitch = Like(user = current_user, pitch_id=id)
-        like_pitch.save_likes()
+        like_blog = Like(user = current_user, blog_id=id)
+        like_blog.save_likes()
 
     @classmethod
     def get_likes(cls,id):
-        like = Like.query.filter_by(pitch_id=id).all()
+        like = Like.query.filter_by(blog_id=id).all()
         return like
 
 
     @classmethod
-    def get_all_likes(cls,pitch_id):
+    def get_all_likes(cls,blog_id):
         likes = Like.query.order_by('-id').all()
         return likes
 
 
     def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
+        return f'{self.user_id}:{self.blog_id}'
 
 
 class Dislike (db.Model):
@@ -140,7 +149,7 @@ class Dislike (db.Model):
 
     id = db.Column(db.Integer,primary_key=True)
     dislike = db.Column(db.Integer,default=1)
-    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
 
     def save_dislikes(self):
@@ -148,22 +157,20 @@ class Dislike (db.Model):
         db.session.commit()
 
     def add_dislikes(cls,id):
-        dislike_pitch = Dislike(user = current_user, pitch_id=id)
-        dislike_pitch.save_dislikes()
+        dislike_blog = Dislike(user = current_user, blog_id=id)
+        dislike_blog.save_dislikes()
 
     @classmethod
     def get_dislikes(cls,id):
-        dislike = Dislike.query.filter_by(pitch_id=id).all()
+        dislike = Dislike.query.filter_by(blog_id=id).all()
         return dislike
 
 
     @classmethod
-    def get_all_dislikes(cls,pitch_id):
+    def get_all_dislikes(cls,blog_id):
         dislikes = Dislike.query.order_by('-id').all()
         return dislikes
 
 
     def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
-        
-            
+        return f'{self.user_id}:{self.blog_id}'
