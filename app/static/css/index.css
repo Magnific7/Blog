@@ -1,10 +1,11 @@
-/* h3{
+h3{
     color: rgb(87, 56, 66);
 }
 .quotes{
     float:left;
+    margin-left: 80%;
     border: 5px solid red;
 }
 .blogs{
     border: 2px solid rgb(100, 74, 74);
-} */
+}

@@ -5,7 +5,7 @@
 
 {% block styles%}
     {{ super() }}
-    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+    <!-- <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}"> -->
 {% endblock %}
 
 {% block content %}
@@ -16,18 +16,21 @@
 
         <h2 class="hey">The blog post</h2>
         <div class="quotes">
-
+        <h3 class='quotes styles:"color:black;"'></h3>
+         <ul></ul>
             {% for quote in quotes %}
                 <small>{{ quote.quote}}</small><br>
-                <small>by {{ quote.author}}</small>
+                <small>by {{ quote.author}}</small><br><br>
             {% endfor %}
+
+        </ul>
       </div>
-     
-          <div class="blog">
+        
+          <div class="blogs">
               <br><br><br>
-              <h4>The most recent posts </h4>
+            <h4>The most recent posts </h4>
             <div><br>
-                <div class='blogs'>{{macro.displayBlogs(blogs)}}</div>
+                <div>{{macro.displayBlogs(blogs)}}</div>
             </div>
           </div> 
    </div>

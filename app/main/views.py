@@ -20,8 +20,7 @@ def index():
     quotes = get_quotes()
     # print(quotes)
     
-    blogs = Blog.query.all()
-
+    blogs = Blog.query.filter_by(id=Blog.id).order_by(Blog.posted.desc()).all()
     title = 'Blog'
     return render_template('index.html', title = title, blogs = blogs, quotes = quotes)
 
