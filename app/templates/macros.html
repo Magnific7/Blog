@@ -1,15 +1,8 @@
 {% macro displayBlogs(blogs)%}
     {% if blogs %}
         {% for blog in blogs %}
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="media-body">
-                        <div class="row">
-                            <div class="col-md-2 img-responsive">
-                            </div>
-                            <div class="col-md-10">
-                                <p class="blog-metadata">
+        <div class="blogging">
+
                                     <h3 class="inline">{{blog.blog_title}}</h3>
                                     <small class="text-muted">  Posted on {{blog.posted.strftime('%d/%m/%Y')}}</small>
                                     <hr>
@@ -28,13 +21,6 @@
 
                                 </div>
 
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-            </div>
         </div>
         {% endfor %}
     {% else %}

@@ -9,15 +9,12 @@ base_url = None
 def configure_request(app):
     global base_url
     base_url = app.config['QUOTE_API_BASE_URL']
-    print('heh')
-    print(base_url)
 
 def get_quotes():
     '''
     Function that gets the json response to our url request
     '''
     get_quotes_url = base_url
-    print(get_quotes_url)
 
     with urllib.request.urlopen(get_quotes_url) as url:
         get_quotes_data = url.read()

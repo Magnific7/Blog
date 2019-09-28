@@ -67,7 +67,6 @@ def blog():
 
     if blog_form.validate_on_submit():
         content = blog_form.content.data
-        # category = 'Interview-blog'
         blog_title = blog_form.blog_title.data
 
         new_blog = Blog(blog_title=blog_title, content=content,user = current_user)

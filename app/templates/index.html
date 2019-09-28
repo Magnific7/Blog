@@ -2,26 +2,32 @@
 {% import 'macros.html' as macro %}
 {% import "bootstrap/wtf.html" as wtf %}
 <!-- Content block -->
+
+{% block styles%}
+    {{ super() }}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock %}
+
 {% block content %}
 
     <title> {{ title }} </title>
 
     <div class="container">
 
-        <h2 class="card">The blog post</h2>
+        <h2 class="hey">The blog post</h2>
         <div class="quotes">
-        <h3> Quotes</h3>
-         <ul>
+
             {% for quote in quotes %}
-                <li>{{ quote.quote}}</li>
+                <small>{{ quote.quote}}</small><br>
+                <small>by {{ quote.author}}</small>
             {% endfor %}
-        </ul>
       </div>
-        
-          <div class="tab-content ">
-            <h4>The most recent posts </h4>
+     
+          <div class="blog">
+              <br><br><br>
+              <h4>The most recent posts </h4>
             <div><br>
-                <div class="card">{{macro.displayBlogs(blogs)}}</div>
+                <div class='blogs'>{{macro.displayBlogs(blogs)}}</div>
             </div>
           </div> 
    </div>

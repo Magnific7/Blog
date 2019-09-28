@@ -1,13 +1,10 @@
-h3{
-    color: rgb(216, 32, 72);
+/* h3{
+    color: rgb(87, 56, 66);
 }
-.something{
-    margin-left: 10%;
+.quotes{
+    float:left;
+    border: 5px solid red;
 }
-.card{
-    background-color: rgb(63, 88, 153);
-    padding: 5%;
-}
-.card border-primary mb-3{
-    display:flex;
-}
+.blogs{
+    border: 2px solid rgb(100, 74, 74);
+} */
