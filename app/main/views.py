@@ -153,6 +153,7 @@ def update_blog(blog_id):
 
     if form.validate_on_submit():
         my_blog.content = form.blog.data
+        my_blog.blog_title = form.title.data
 
         db.session.add(my_blog)
         db.session.commit()
