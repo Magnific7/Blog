@@ -7,6 +7,7 @@ Flask==1.1.1
 Flask-Bootstrap==3.3.7.1
 Flask-Script==2.0.6
 Flask-WTF==0.14.2
+gyp==0.1
 idna==2.6
 ipaddress==1.0.17
 itsdangerous==1.1.0
@@ -15,6 +16,7 @@ keyring==10.6.0
 keyrings.alt==3.0
 MarkupSafe==1.1.1
 pycrypto==2.6.1
+pygobject==3.26.1
 pyxdg==0.25
 SecretStorage==2.3.1
 six==1.11.0
