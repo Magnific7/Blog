@@ -6,7 +6,7 @@ This application helps users to post there blogs online and be able to view othe
 These are the behaviours/features that the application implements for use by a user.
 
 * As a user, I can view the blog posts on the site.
-* submit a pitch in any category.
+* As a user, I can comment on blog posts.
 * Leave a comment after signing in.
 * view the pitches I have created in my profile page.
 * comment on the different pitches and leave feedback.
