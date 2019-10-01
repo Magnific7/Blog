@@ -4,9 +4,8 @@
 This application helps users to post there blogs online and be able to view other user's blogs and comment on them or like them
 ## User Stories
 These are the behaviours/features that the application implements for use by a user.
-As a user I can :
 
-* See the pitches other people have posted.
+* As a user, I can view the blog posts on the site.
 * submit a pitch in any category.
 * Leave a comment after signing in.
 * view the pitches I have created in my profile page.
