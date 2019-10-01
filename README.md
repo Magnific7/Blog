@@ -8,7 +8,7 @@ These are the behaviours/features that the application implements for use by a u
 * As a user, I can view the blog posts on the site.
 * As a user, I can comment on blog posts.
 * As a user, I can view the most recent posts
-* view the pitches I have created in my profile page.
+* As a user, I can see random quotes on the site
 * comment on the different pitches and leave feedback.
 
 ## Specifications
