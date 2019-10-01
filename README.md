@@ -17,6 +17,7 @@ These are the behaviours/features that the application implements for use by a u
 | Behaviour | Input | Output |
 | :---------------- | :---------------: | ------------------: |
 | Display blogs | **On page load** | List of various blogs |
+| Display a random quote | **On page load** | A new quote appears at the top |
 | Display tabs with  category | **On Tab link click** | Clickable links to open pitches by category |
 | Display profile | **Click profile page** | Redirected to a page with your profile |
 | Display pitches | **On any pitch category** | Displays each pitch, author, title, pitch, date comment tab in that category |
