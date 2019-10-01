@@ -11,6 +11,7 @@ These are the behaviours/features that the application implements for use by a u
 * As a user, I can see random quotes on the site
 * As a writer, I must sign in to the blog.
 * As a writer, I can also create a blog from the application.
+* As a writer, I can update or delete blogs I have created
 
 ## Specifications
 | Behaviour | Input | Output |
