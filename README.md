@@ -19,7 +19,7 @@ These are the behaviours/features that the application implements for use by a u
 | Display blogs | **On page load** | List of various blogs |
 | Display a random quote | **On page load** | A new quote appears at the top |
 | Display profile | **Click profile page** | Redirected to a page with your profile |
-| Display comments | **Click on comment button** | Displays each blog, comments, commentform, writer of the comments |
+| Display comments | **Click on comment button** | Displays the blog,its comments, commentform, writer of the comments |
 | To add a blog  | **Click new post** | Redirected to the blog collection form|
 
 
