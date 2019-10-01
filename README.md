@@ -18,10 +18,9 @@ These are the behaviours/features that the application implements for use by a u
 | :---------------- | :---------------: | ------------------: |
 | Display blogs | **On page load** | List of various blogs |
 | Display a random quote | **On page load** | A new quote appears at the top |
-| Display tabs with  category | **On Tab link click** | Clickable links to open pitches by category |
 | Display profile | **Click profile page** | Redirected to a page with your profile |
-| Display pitches | **On any pitch category** | Displays each pitch, author, title, pitch, date comment tab in that category |
-| To add a pitch  | **Click an add pitch** | Redirected to the pitch collection form|
+| Display comments | **Click on comment button** | Displays each blog, comments, commentform, writer of the comments |
+| To add a blog  | **Click new post** | Redirected to the blog collection form|
 
 
 ## SetUp / Installation Requirements
@@ -33,7 +32,7 @@ These are the behaviours/features that the application implements for use by a u
 ### Cloning
 * In your terminal:
 
-        $ git clone https://github.com/Magnific7/Pitch.git
+        $ git clone https://github.com/Magnific7/Blog.git
         $ cd peech
 
 ## Running the Application
